@@ -1,0 +1,338 @@
+teams:
+- id: compiler
+  name: Compiler
+  description: The OCaml Compiler team, responsible for the development and maintenance
+    of the language, the standard library and the compiler tools.
+  contacts:
+  - name: Email
+    link: https://inbox.ocaml.org/caml-list/
+    icon: /icons/email.svg
+  - name: Discord
+    link: https://discord.com/channels/436568060288172042/904141760052228116
+    icon: /icons/discord.svg
+  - name: GitHub
+    link: https://github.com/ocaml/ocaml/issues
+    icon: /icons/github.svg
+  teams:
+  - name: OCaml Dev
+    github: ocaml-dev
+    members:
+    - name: Damien Doligez
+      github: damiendoligez
+      role: Team Lead
+    - name: Xavier Leroy
+      github: xavierleroy
+      role: Team Lead
+    - name: Alain Frisch
+      github: alainfrisch
+      role: Maintainer
+    - name: "Arma\xEBl Gu\xE9neau"
+      github: Armael
+      role: Maintainer
+    - name: David Allsopp
+      github: dra27
+      role: Maintainer
+    - name: Enguerrand
+      github: Engil
+      role: Maintainer
+    - name: Florian Angeletti
+      github: Octachron
+      role: Maintainer
+    - name: "Fr\xE9d\xE9ric Bour"
+      github: let-def
+      role: Maintainer
+    - name: Gabriel Scherer
+      github: gasche
+      role: Maintainer
+    - name: Jacques Garrigue
+      github: garrigue
+      role: Maintainer
+    - name: Jacques-Henri Jourdan
+      github: jhjourdan
+      role: Maintainer
+    - name: Jeremy Yallop
+      github: yallop
+      role: Maintainer
+    - name: KC Sivaramakrishnan
+      github: kayceesrk
+      role: Maintainer
+    - name: Leo White
+      github: lpw25
+      role: Maintainer
+    - name: Luc Maranget
+      github: maranget
+      role: Maintainer
+    - name: Mark Shinwell
+      github: mshinwell
+      role: Maintainer
+    - name: "Nicol\xE1s Ojeda B\xE4r"
+      github: nojb
+      role: Maintainer
+    - name: Pierre Chambart
+      github: chambart
+      role: Maintainer
+    - name: Sadiq Jaffer
+      github: sadiqj
+      role: Maintainer
+    - name: Stephen Dolan
+      github: stedolan
+      role: Maintainer
+    - name: "S\xE9bastien Hinderer"
+      github: shindere
+      role: Maintainer
+    - name: Thomas Refis
+      github: trefis
+      role: Maintainer
+    - name: Vincent Laviron
+      github: lthls
+      role: Maintainer
+- id: infrastructure
+  name: Infrastructure
+  description: The infrastructure team is responsible to maintain and evolve the infrastructure
+    powering the official OCaml projects, including the servers for OCaml.org and
+    the opam-repository CI.
+  contacts:
+  - name: Email
+    link: infrastructure@lists.ocaml.org
+    icon: /icons/email.svg
+  - name: GitHub
+    link: https://github.com/ocaml/infrastructure/issues
+    icon: /icons/github.svg
+  teams:
+  - name: Infrastructure
+    github: infrastructure
+    members:
+    - name: Anil Madhavapeddy
+      github: avsm
+      role: Team Lead
+    - name: David Allsopp
+      github: dra27
+      role: Maintainer
+    - name: Kate
+      github: kit-ty-kate
+      role: Maintainer
+    - name: Louis Gesbert
+      github: AltGr
+      role: Maintainer
+    - name: Thomas Gazagnaire
+      github: samoht
+      role: Maintainer
+- id: moderation
+  name: Moderation
+  description: The moderation team is responsible for the moderation of the official
+    OCaml forums and social platforms, such Discuss, Discord, or the mailing lists.
+  contacts:
+  - name: Email
+    link: moderation@lists.ocaml.org
+    icon: /icons/email.svg
+  teams:
+  - name: Moderation
+    github:
+    members:
+    - name: Thomas Leonard
+      github: talex5
+      role: Discuss Moderator
+    - name: Yotam Barnoy
+      github: Bluddy
+      role: Discord Moderator
+    - name: Gabriel Radanne
+      github: Drup
+      role: Discord Moderator
+    - name: Florian Angeletti
+      github: octachron
+      role: Discord Moderator
+- id: packaging
+  name: Packaging
+  description: The Packaging team is responsible to ensure the quality of the OCaml
+    packages ecosystem, and in particular, to review submitions to the Opam repository.
+  contacts:
+  - name: Email
+    link: packaging@lists.ocaml.org
+    icon: /icons/email.svg
+  teams:
+  - name: Packaging
+    github: opam-packaging
+    members:
+    - name: Anil Madhavapeddy
+      github: avsm
+      role: Team Lead
+    - name: "Daniel B\xFCnzli"
+      github: dbuenzli
+      role: Maintainer
+    - name: David Allsopp
+      github: dra27
+      role: Maintainer
+    - name: Louis Gesbert
+      github: AltGr
+      role: Maintainer
+    - name: Thomas Gazagnaire
+      github: samoht
+      role: Maintainer
+- id: platform
+  name: Platform
+  description: The Platform team is responsible for the development and maintenance
+    of the OCaml Platform, the official OCaml developer toolchain.
+  contacts:
+  - name: Email
+    link: platform@lists.ocaml.org
+    icon: /icons/email.svg
+  teams:
+  - name: Dune
+    github: dune-dev
+    members:
+    - name: Anil Madhavapeddy
+      github: avsm
+      role: Team Lead
+    - name: David Allsopp
+      github: dra27
+      role: Maintainer
+    - name: Rudi Grinberg
+      github: rgrinberg
+      role: Maintainer
+    - name: gerdstolpmann
+      github: gerdstolpmann
+      role: Maintainer
+  - name: Merlin
+    github: merlin-dev
+    members:
+    - name: Anil Madhavapeddy
+      github: avsm
+      role: Team Lead
+    - name: "Fr\xE9d\xE9ric Bour"
+      github: let-def
+      role: Maintainer
+    - name: Gemma Gordon
+      github: GemmaG
+      role: Maintainer
+    - name: Thomas Refis
+      github: trefis
+      role: Maintainer
+  - name: Odoc
+    github: odoc-dev
+    members:
+    - name: Anil Madhavapeddy
+      github: avsm
+      role: Team Lead
+    - name: Anton Bachin
+      github: aantron
+      role: Maintainer
+    - name: "Daniel B\xFCnzli"
+      github: dbuenzli
+      role: Maintainer
+    - name: Jon Ludlam
+      github: jonludlam
+      role: Maintainer
+    - name: Leo White
+      github: lpw25
+      role: Maintainer
+    - name: Patrick Ecker
+      github: ryyppy
+      role: Maintainer
+    - name: Thomas Refis
+      github: trefis
+      role: Maintainer
+- id: web
+  name: Web
+  description: The Web team is responsible for the development and maintenance of
+    the officla OCaml websites, in particular OCaml.org and its subdomains.
+  contacts:
+  - name: Email
+    link: web@lists.ocaml.org
+    icon: /icons/email.svg
+  teams:
+  - name: OCaml.org
+    github: v3.ocaml.org
+    members:
+    - name: Anil Madhavapeddy
+      github: avsm
+      role: Team Lead
+    - name: Ashish Agarwal
+      github: agarwal
+      role: Maintainer
+    - name: Gemma Gordon
+      github: GemmaG
+      role: Maintainer
+    - name: ILeandersson
+      github: ILeandersson
+      role: Maintainer
+    - name: Jon Ludlam
+      github: jonludlam
+      role: Maintainer
+    - name: Lucas Pluvinage
+      github: TheLortex
+      role: Maintainer
+    - name: Patrick Ferris
+      github: patricoferris
+      role: Maintainer
+    - name: Richard Davison
+      github: rdavison
+      role: Maintainer
+    - name: Sonja Heinze
+      github: pitag-ha
+      role: Maintainer
+    - name: Thibaut Mattio
+      github: tmattio
+      role: Maintainer
+  - name: OCaml.org (V2)
+    github: v2.ocaml.org-dev
+    members:
+    - name: Ashish Agarwal
+      github: agarwal
+      role: Maintainer
+    - name: Bactrian the Double Humped Camel Bot
+      github: bactrian
+      role: Maintainer
+    - name: Christophe Troestler
+      github: Chris00
+      role: Maintainer
+    - name: Florian Angeletti
+      github: Octachron
+      role: Maintainer
+    - name: "Fr\xE9d\xE9ric Bour"
+      github: let-def
+      role: Maintainer
+    - name: Ivan Gotovchits
+      github: ivg
+      role: Maintainer
+    - name: Jon Ludlam
+      github: jonludlam
+      role: Maintainer
+    - name: Leo White
+      github: lpw25
+      role: Maintainer
+    - name: Louis Gesbert
+      github: AltGr
+      role: Maintainer
+    - name: Patrick Ferris
+      github: patricoferris
+      role: Maintainer
+    - name: Philippe Wang
+      github: pw374
+      role: Maintainer
+    - name: Thibaut Mattio
+      github: tmattio
+      role: Maintainer
+    - name: Thomas Gazagnaire
+      github: samoht
+      role: Maintainer
+working-groups:
+- id: wg-metaprogramming
+  name: Meta-programming Working Group
+  description: Work on tools and libraries to do meta-programming with OCaml.
+  contacts:
+  - name: Email
+    link: wg-metaprogramming@lists.ocaml.org
+    icon: /icons/email.svg
+  teams:
+  - name: Ppxlib
+    github:
+    members:
+    - name: Sonja Heinze
+      github: pitag-ha
+      role: Lead ppxlib maintainer
+    - name: Carl Eastlund
+      github: ceastlund
+      role: ppxlib maintainer
+    - name: "Paul-Elliot Angl\xE8s d'Auriac"
+      github: panglesd
+      role: ppxlib maintainer

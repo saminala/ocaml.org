@@ -12,7 +12,9 @@
   uri
   lambdasoup
   fpath
-  hilite)
+  hilite
+  yojson
+  xdg)
  (preprocess
   (pps ppx_deriving_yaml)))
 

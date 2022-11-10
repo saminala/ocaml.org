@@ -59,4 +59,5 @@ utop: ## Run a REPL and link with the project's libraries
 .PHONY: scrape
 scrape: ## Generate the po files
 	opam exec -- dune exec --root . tool/ood-gen/bin/scrape.exe rss
+	opam exec -- dune exec --root . tool/ood-gen/bin/scrape.exe governance
 	opam exec -- dune exec --root . tool/ood-gen/bin/watch_scrape.exe
