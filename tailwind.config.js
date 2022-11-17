@@ -25,7 +25,13 @@ module.exports = {
             },
             'h6 :where(a)': {
               'font-weight': "500"
-            }
+            },
+            'code::before': {
+              content: '""',
+            },
+            'code::after': {
+              content: '""',
+            },
           }
         }
       },
