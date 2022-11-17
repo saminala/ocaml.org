@@ -5,6 +5,30 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            'h1 :where(a)': {
+              'font-weight': "800"
+            },
+            'h2 :where(a)': {
+              'font-weight': "700"
+            },
+            'h3 :where(a)': {
+              'font-weight': "600"
+            },
+            'h4 :where(a)': {
+              'font-weight': "600"
+            },
+            'h5 :where(a)': {
+              'font-weight': "500"
+            },
+            'h6 :where(a)': {
+              'font-weight': "500"
+            }
+          }
+        }
+      },
       maxWidth: {
         '8xl': '90rem',
       },
