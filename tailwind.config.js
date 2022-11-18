@@ -42,6 +42,9 @@ module.exports = {
           100: "rgba(142, 233, 60, 0.1)",
           600: "rgba(142, 233, 60, 1)",
         },
+        error: {
+          600: "#c10f0f",
+        },
         global: {
           default: "rgba(250, 248, 243, 1)",
         },
