@@ -1,9 +1,9 @@
-let render ~inner_html =
+let render ?(wide=false) ~inner_html () =
 <header 
   class="lg:fixed top-0 w-full z-50 bg-background-default h-12 flex items-center text-white dark:bg-[#171717]"
   x-data="{ open: false, sidebar: window.innerWidth > 1024 && true, showOnMobile: false}"
   @resize.window="sidebar = window.innerWidth > 1024">
-  <div class="container-fluid header wide flex justify-between items-center">
+  <div class="container-fluid header <%s if wide then "wide" else "" %> flex justify-between items-center">
     <div class="space-x-8 flex items-center">
       <a href="<%s Url.index %>" class="block pb-2 pt-1">
         <img src="/logo-with-name.svg" width="100" alt="OCaml logo" class="dark:hidden">

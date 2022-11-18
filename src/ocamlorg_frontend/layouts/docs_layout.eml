@@ -9,6 +9,7 @@ inner
 =
 Package_layout.render
 ?styles
+~wide:true
 ~description
 ~canonical
 ~title
