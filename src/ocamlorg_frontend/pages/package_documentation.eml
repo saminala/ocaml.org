@@ -5,11 +5,11 @@ let sidebar
 ~maptoc
 (package : Package_intf.package)
 =
-  <div class="space-y-2 flex flex-col pt-6">
+  <div class="space-y-2 flex flex-col">
     <div class="space-y-6 flex flex-col overflow-x:scroll">
 
       <div class="">
-        <a title="Package <%s package.name %>" class="py-1 font-medium text-body-600 hover:text-orange-600 transition-colors" href="<%s Url.package_doc package.name package.version ~page:"index.html" %>">
+        <a title="Package <%s package.name %>" class="py-1 text-xl font-bold text-body-600 hover:text-orange-600 transition-colors" href="<%s Url.package_doc package.name package.version ~page:"index.html" %>">
         <%s package.name %>
         </a>
         <% if List.length path > 1 then (%>
@@ -49,10 +49,10 @@ let str_path =
 in
 Docs_layout.render
 ~title
-~description:(Printf.sprintf "%s %s: %s" package.name package.version package.description)
+~description:(Some(Printf.sprintf "%s %s: %s" package.name package.version package.description))
 ~styles:["/css/main.css"; "/css/doc.css"]
-~header_html:((Docs_layout.packages_link) ^ (Docs_layout.package_overview_link ~package) ^ (Docs_layout.version_select ~package) ^ (Docs_layout.package_docs_link ~package))
-~sidebar_html:(sidebar ~path ~str_path ~toc ~maptoc package) @@
+~sidebar_html:(sidebar ~path ~str_path ~toc ~maptoc package)
+~canonical:(Some(Url.package_doc package.name package.version)) @@
   <div class="pt-6">
     <!-- this is where search will go
       <input style="width:100%" class="mb-6 focus:ring-orange-500 focus:border-orange-500"
@@ -61,7 +61,7 @@ Docs_layout.render
     -->
     <% if (maptoc != []) && (List.length path > 1) then (%>
         <div class="text-body-400">
-          <a title="Package <%s package.name %>" class="py-1 font-medium text-body-600 hover:text-orange-600 transition-colors" href="<%s Url.package_doc package.name package.version ~page:"index.html" %>">
+          <a title="Package <%s package.name %>" class="py-1 text-xl font-bold text-body-600 hover:text-orange-600 transition-colors" href="<%s Url.package_doc package.name package.version ~page:"index.html" %>">
           <%s package.name %>
           </a> &bull;
           <span title="Library <%s Breadcrumbs.path_item_name (List.hd path) %>"><%s Breadcrumbs.path_item_name (List.hd path) %></span>

@@ -2,18 +2,40 @@ type tab =
   | Overview
   | Documentation
   
+
+let packages_link =
+  <a class="text-lg text-orange-600 font-bold" href="<%s Url.packages %>">Packages</a>
+
+let version_select ~tab ~(package : Package_intf.package) =
+  <select id="version" name="version" onchange="location = this.value;" class="w-full lg:w-auto appearance-none text-body-600 border rounded-md py-1 pl-3 border-gray-200 pr-14 h-full">
+    <% package.versions |> List.iter begin fun v -> %>
+    <option value="<%s (match tab with
+      | Documentation -> Url.package_doc package.name v ~page:"index.html"
+      | Overview -> Url.package_with_version package.name v) %>" <%s if v = package.version then "selected" else "" %>>
+      <%s v %>
+    </option>
+    <% end; %>
+  </select>
+
+let package_overview_link ~active ~(package : Package_intf.package) =
+  <a class="font-semibold text-gray-900 <%s if active then "underline" else ""%>" href="<%s Url.package_with_version package.name package.version %>"><%s package.name %></a>
+
+let package_docs_link ~active ~(package: Package_intf.package) =
+  <a class="<%s if active then "text-gray-900 underline" else ""%>" href="<%s Url.package_doc package.name package.version ~page:"index.html" %>">Documentation</a>
+
+
 let render
 ?styles
-?(extra_nav="")
 ~title
 ~description
-~tab
+~(tab: tab)
 ~documentation_status
 ~canonical
 ~(package : Package_intf.package)
-inner =
-let tab_class = "border-transparent border-b-2 hover:border-primary-600 p-4 font-medium relative text-body-400" in
+inner_html =
+(*
 let unavailable_tab_class = "border-transparent border-b-2 p-4 font-medium relative text-gray-400" in
+let tab_class = "border-transparent border-b-2 hover:border-primary-600 p-4 font-medium relative text-body-400" in
 let current_tab_class = "border-b-2 hover:border-primary-600 p-4 font-medium border-primary-600 relative text-primary-600" in
 let documentation_dot = match documentation_status with 
   | `Failure -> "<span class=\"bg-red-500 ml-2 absolute top-2 p-1 rounded-full inline-block\"></span>"
@@ -24,68 +46,54 @@ let doc_status_tooltip = match documentation_status with
   | `Failure -> "title=\"documentation failed to build\""
   | `Unknown -> "title=\"failed to fetch documentation\""
   | _ -> ""
+in *)
+let _doc_status_tooltip = match documentation_status with
+  | `Failure -> "title=\"documentation failed to build\""
+  | `Unknown -> "title=\"failed to fetch documentation\""
+  | _ -> ""
 in
-Layout.render
-?styles
-~wide:true
-~title
-~description
-~canonical @@
-<div class="bg-white">
-  <div class="py-5 lg:py-12">
-    <div class="container-fluid wide">
-      <div class="flex justify-between flex-col md:flex-row">
-        <div class="flex flex-col">
-          <h4 class="font-bold mb-3">
-            <%s package.name %>
-          </h4>
-          <div class="text-body-400">
-            <%s package.description %>
-          </div>
-        </div>
-        <div
-          class="flex justify-between space-y-5 md:space-y-0 md:space-x-5 flex-col md:flex-row w-full md:w-auto my-6 md:my-0">
-          <div class=" h-14 w-full md:w-auto flex-col flex">
-            <label class="font-semibold mb-2">Version</label>
-            <div class="relative">
-              <select id="version" name="version" onchange="location = this.value;" class="w-full lg:w-auto appearance-none text-body-600 border rounded-md py-3 pl-6 border-gray-200 pr-14 h-full">
-                <% package.versions |> List.iter begin fun item -> %>
-                <option value="/p/<%s package.name %>/<%s item %>"<%s if item = package.version then "selected" else "" %>>
-                  <%s item %>
-                </option>
-                <% end; %>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-col">
-        <div class="flex mt-8 gap-x-6 border-b border-gray-200 items-stretch flex-wrap">
-          <a href="<%s Url.package_with_version package.name package.version %>" class="<%s if tab = Overview then current_tab_class else tab_class %>">
-            Overview
-          </a>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <% (match description with | Some description -> %>
+    <meta name="description" content="<%s description %>">
+    <% | None -> ()); %>
+    <meta name="twitter:title" content="<%s title %>">
+    <% (match description with | Some description -> %>
+    <meta name="twitter:description" content="<%s description %>">
+    <% | None -> ()); %>
+    <meta property="og:site_name" content="OCaml">
+    <meta property="og:type" content="object">
+    <meta property="og:title" content="<%s title %>">
+    <% (match description with | Some description -> %>
+    <meta property="og:description" content="<%s description %>">
+    <% | None -> ()); %>
+    <% (match canonical with | Some canonical -> %>
+    <link rel="canonical" href="https://ocaml.org<%s canonical %>">
+    <% | None -> ()); %>
+    <meta name="theme-color" content="#fff">
+    <meta name="color-scheme" content="white">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <% (match styles with | Some styles -> styles |> List.iter (fun style -> %>
+    <link rel="stylesheet" href="<%s style %>">
+    <% ) | None -> %>
+    <link rel="stylesheet" href="/css/main.css">
+    <% ); %>
+    <link rel="stylesheet" href="/vendors/font-files/inter.css">
+    <script defer src="/vendors/alpine.min.js"></script>
+    <title><%s title %></title>
+  </head>
 
-          <% (match documentation_status with
-            | `Unknown -> %>
-            <span class="<%s unavailable_tab_class %>" <%s! doc_status_tooltip %>>
-            Documentation
-              <%s! documentation_dot %>
-            </span>
-          <% | _ -> %>
-            <a href="<%s Url.package_doc package.name package.version %>"
-              class="<%s if tab = Documentation then current_tab_class else tab_class %>"
-              <%s! doc_status_tooltip %>>
-                Documentation
-                <%s! documentation_dot %>
-            </a>
-          <% ); %>
-          
-          <%s! extra_nav %>
-        </div>
-      </div>
-      <div class="py-12">
-        <%s! inner %>
-      </div>
+  <body class="light">
+    <%s! Docs_header.render ~inner_html:((packages_link) ^ (package_overview_link ~package ~active:(tab == Overview)) ^ (version_select ~tab ~package) ^ (package_docs_link ~package ~active:(tab == Documentation))) %>
+
+    <div class="pt-12">
+      <%s! inner_html %>
     </div>
-  </div>
-</div>
+
+    <%s! Docs_footer.render () %>
+  </body>
+</html>

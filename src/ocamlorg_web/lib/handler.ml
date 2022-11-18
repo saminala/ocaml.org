@@ -613,5 +613,5 @@ let package_doc t kind req =
           let package_meta = package_meta t package in
           Dream.html
             (Ocamlorg_frontend.package_documentation ~title
-               ~path ~toc ~maptoc ~content:doc.content
+               ~path ~toc ~maptoc ~content:doc.content ~package:package_meta
                package_meta))

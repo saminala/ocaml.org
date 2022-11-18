@@ -8,20 +8,86 @@ let render
 ~source
 ~changes_filename
 ~license_filename
-(package : Package_intf.package) =
-Docs_layout.render
+(package : Package_intf.package)
+=
+let tab_class =
+    "border-transparent border-b-2 hover:border-primary-600 p-4 font-bold relative text-body-600"
+in
+let current_tab_class =
+    "border-b-2 p-4 font-bold border-primary-600 relative text-primary-600"
+in
+Package_layout.render
+~styles:["/css/main.css"]
 ~title:(Printf.sprintf "%s %s · OCaml Package" package.name package.version)
-~description:(Printf.sprintf "%s %s: %s" package.name package.version package.description)
-~styles:[] (* current = overview highlighting in navbar*)
-~header_html:((Docs_layout.packages_link) ^ (Docs_layout.package_overview_link ~package) ^ (Docs_layout.version_select ~package) ^ (Docs_layout.package_docs_link ~package))
+~description:(Some(Printf.sprintf "%s %s: %s" package.name package.version package.description))
+~tab:Package_layout.Overview
+~documentation_status
 ~canonical:(Some(Url.package_with_version package.name package.version))
-~sidebar_html:"" @@
+~(package : Package_intf.package) @@
+<main>
+<div class="bg-white">
+<div class="container-fluid">
 <div class="flex lg:space-x-4 xl:space-x-12 flex-col xl:flex-row justify-between">
-    <div class="flex-1 prose w-full xl:w-1/2 max-w-full">
-        <div class="p-3 bg-body-600 bg-opacity-5 rounded font-semibold mb-8"><%s! readme_title %></div>
-        <%s! readme %>
+    <div class="flex-1 w-full xl:w-1/2 max-w-full pb-8">
+        <div class="flex flex-col mt-8 mb-6">
+          <h1 class="font-bold mb-3">
+            <%s package.name %> <span class="text-base text-body-500"><%s package.version %></span>
+          </h1>
+          <div class="text-body-400">
+            <%s package.description %>
+          </div>
+        </div>
+
+        <div x-data="{ tab: window.location.hash ? window.location.hash.substring(1) : '' }" id="tab_wrapper">
+          <nav class="flex flex-col mb-8">
+            <div class="flex gap-x-6 border-b border-gray-200 items-stretch flex-wrap">
+              <a :class="{ '<%s tab_class %>': tab !== '', '<%s current_tab_class %>': tab == '' }" @click.prevent="tab = ''; window.location.hash = ''" href="#"><%s! readme_title %></a>
+              <a :class="{ '<%s tab_class %>': tab !== 'dependencies', '<%s current_tab_class %>': tab == 'dependencies' }" @click.prevent="tab = 'dependencies'; window.location.hash = 'dependencies'" href="#"><%s Int.to_string @@ List.length dependencies %> Dependencies</a>
+              <a :class="{ '<%s tab_class %>': tab !== 'dependents', '<%s current_tab_class %>': tab == 'dependents' }" @click.prevent="tab = 'dependents'; window.location.hash = 'dependents'" href="#"><%s Int.to_string @@ List.length rev_dependencies %> Dependents</a>
+            </div>
+        </nav>
+
+        <div class="prose" x-show="tab === ''" >
+            <%s! readme %>
+        </div>
+        <div x-show="tab === 'dependencies'">
+            <div class="flex flex-col space-y-2">
+                <% dependencies |> List.iter (fun (name, cstr) -> %>
+                <div class="flex items-center space-x-3">
+                    <a href="<%s Url.package name %>" class="text-primary-600 hover:underline">
+                        <%s name %>
+                    </a>
+                    <% match cstr with None -> () | Some cstr -> %>
+                    <span
+                        class="px-2 py-0.5 font-medium text-body-400 font-medium bg-gray-100 rounded">
+                        <pre class="not-prose"><%s cstr %></pre>
+                    </span>
+                    <% ; %>
+                </div>
+                <% ); %>
+            </div>
+        </div>
+        <div x-show="tab === 'dependents'">
+            <div class="flex flex-col space-y-2">
+                <% rev_dependencies |> List.iter (fun (name, cstr, version) -> %>
+                <div class="flex items-center space-x-3">
+                    <a href="<%s Url.package_with_version name version %>" class="text-primary-600 hover:underline">
+                        <%s name %>
+                    </a>
+                    <% match cstr with None -> () | Some cstr -> %>
+                    <span
+                        class="px-2 py-0.5 font-medium text-body-400 font-medium bg-gray-100 rounded">
+                        <pre class="not-prose"><%s cstr %></pre>
+                    </span>
+                    <% ; %>
+                </div>
+                <% ); %>
+            </div>
+        </div>
+        </div>
+
     </div>
-    <div class="p-3 py-6 lg:p-8 border border-gray-200 text-sm rounded-xl xl:max-w-md w-full max-w-full">
+    <div class="p-3 py-6 lg:p-8 text-sm xl:max-w-md w-full max-w-full">
         <span class="inline-flex items-center text-lg font-medium text-gray-900">
             <svg xmlns="http://www.w3.org/2000/svg" class="mr-4 h-6 w-6 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -181,38 +247,6 @@ Docs_layout.render
             </div>
         </div>
         <% ; %>
-        <div class="font-semibold mt-8 mb-3 text-base text-body-400">Dependencies</div>
-        <div class="flex flex-col space-y-3 max-h-96 overflow-auto">
-            <% dependencies |> List.iter (fun (name, cstr) -> %>
-            <div class="flex items-center space-x-3">
-                <a href="<%s Url.package name %>" class="text-primary-600 hover:underline">
-                    <%s name %>
-                </a>
-                <% match cstr with None -> () | Some cstr -> %>
-                <span
-                    class="px-2 py-1 font-medium text-body-400 font-medium bg-gray-100 rounded">
-                    <pre><%s cstr %></pre>
-                </span>
-                <% ; %>
-            </div>
-            <% ); %>
-        </div>
-        <div class="font-semibold mt-8 mb-3 text-base text-body-400">Reverse Dependencies</div>
-        <div class="flex flex-col space-y-3 max-h-96 overflow-auto">
-            <% rev_dependencies |> List.iter (fun (name, cstr, version) -> %>
-            <div class="flex items-center space-x-3">
-                <a href="<%s Url.package_with_version name version %>" class="text-primary-600 hover:underline">
-                    <%s name %>
-                </a>
-                <% match cstr with None -> () | Some cstr -> %>
-                <span
-                    class="px-2 py-1 font-medium text-body-400 font-medium bg-gray-100 rounded">
-                    <pre><%s cstr %></pre>
-                </span>
-                <% ; %>
-            </div>
-            <% ); %>
-        </div>
     </div>
 </div>
 <script>
@@ -254,3 +288,6 @@ Docs_layout.render
 
 })));
 </script>
+</div>
+</div>
+</main>
