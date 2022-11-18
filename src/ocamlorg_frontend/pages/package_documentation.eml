@@ -51,8 +51,7 @@ Docs_layout.render
 ~title
 ~description:(Printf.sprintf "%s %s: %s" package.name package.version package.description)
 ~styles:["/css/main.css"; "/css/doc.css"]
-~logo_href:(Url.package_with_version package.name package.version)
-~header_html:((Docs_layout.package_overview_link ~package) ^ (Docs_layout.version_select ~package))
+~header_html:((Docs_layout.packages_link) ^ (Docs_layout.package_overview_link ~package) ^ (Docs_layout.version_select ~package) ^ (Docs_layout.package_docs_link ~package))
 ~sidebar_html:(sidebar ~path ~str_path ~toc ~maptoc package) @@
   <div class="pt-6">
     <!-- this is where search will go

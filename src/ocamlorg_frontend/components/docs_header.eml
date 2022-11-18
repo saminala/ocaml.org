@@ -1,11 +1,11 @@
-let render ~logo_href ~inner_html =
+let render ~inner_html =
 <header 
   class="lg:fixed top-0 w-full z-50 bg-background-default h-12 flex items-center text-white dark:bg-[#171717]"
   x-data="{ open: false, sidebar: window.innerWidth > 1024 && true, showOnMobile: false}"
   @resize.window="sidebar = window.innerWidth > 1024">
   <div class="container-fluid header wide flex justify-between items-center">
     <div class="space-x-8 flex items-center">
-      <a href="<%s logo_href %>" class="block pb-2 pt-1">
+      <a href="<%s Url.index %>" class="block pb-2 pt-1">
         <img src="/logo-with-name.svg" width="100" alt="OCaml logo" class="dark:hidden">
         <img src="/logo-with-name-white.svg" width="100" alt="OCaml logo" class="hidden dark:inline">
       </a>
@@ -33,7 +33,7 @@ let render ~logo_href ~inner_html =
       <div
         class="hamburger lg:hidden flex h-12 w-12 hover:bg-primary-100 flex items-center justify-center rounded-full"
         x-on:click="open = ! open">
-        <dib class="text-body-400 dark:text-white">
+        <div class="text-body-400 dark:text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
             stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -49,9 +49,9 @@ let render ~logo_href ~inner_html =
     @click.away="open = false" x-transition:enter="transition duration-200 ease-out"
     x-transition:enter-start="translate-x-full" x-transition:leave="transition duration-100 ease-in"
     x-transition:leave-end="translate-x-full">
-    <ul class="text-body-400 p-6 space-y-6 font-semibold">
-      <li class="flex justify-between items-center">
-        <a href="<%s logo_href %>"><img width="132" src="/logo-with-name.svg" alt=""></a>
+    <div class="text-body-400 p-6 space-y-6 font-semibold">
+      <div class="flex justify-between items-center">
+        <a href="<%s Url.index %>"><img width="132" src="/logo-with-name.svg" alt=""></a>
 
         <div class="close lg:hidden h-12 w-12 hover:bg-primary-100 flex items-center justify-center rounded-full"
           x-on:click="open = false">
@@ -60,10 +60,10 @@ let render ~logo_href ~inner_html =
               stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
-            </i>
           </div>
-      </li>
-      <li>
+        </div>
+      </div>
+      <div>
         <form action="/packages/search" method="GET" class="form-input form-input-sm">
           <div class="form-input__icon">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-body-400" fill="none" viewBox="0 0 24 24"
@@ -74,9 +74,9 @@ let render ~logo_href ~inner_html =
           </div>
           <input class="focus:ring-orange-500" type="search" id="q" name="q" placeholder="Search OCaml packages">
         </form>
-      </li>
+      </div>
 
       <%s! inner_html %>
-    </ul>
+    </div>
   </div>
 </header>

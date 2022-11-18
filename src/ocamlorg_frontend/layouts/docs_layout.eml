@@ -1,50 +1,59 @@
+let packages_link =
+  <a class="text-lg text-orange-600 font-bold" href="<%s Url.packages %>">Packages</a>
+
 let version_select ~(package : Package_intf.package) =
   <select id="version" name="version" onchange="location = this.value;" class="w-full lg:w-auto appearance-none text-body-600 border rounded-md py-1 pl-3 border-gray-200 pr-14 h-full">
     <% package.versions |> List.iter begin fun item -> %>
-    <option value="/p/<%s package.name %>/<%s item %>/doc/index.html"<%s if item = package.version then "selected" else "" %>>
+    <option value="/p/<%s package.name %>/<%s item %>/doc/index.html" <%s if item = package.version then "selected" else "" %>>
       <%s item %>
     </option>
     <% end; %>
   </select>
 
 let package_overview_link ~(package : Package_intf.package) =
-  <a class="" href="<%s Url.package_doc package.name package.version ~page:"index.html" %>">package <%s package.name %></a>
+  <a class="" href="<%s Url.package_with_version package.name package.version %>"><%s package.name %></a>
 
-let render ?description ?styles ~title ~logo_href ~header_html ~sidebar_html inner =
+let package_docs_link ~(package: Package_intf.package) =
+  <a class="" href="<%s Url.package_doc package.name package.version ~page:"index.html" %>">Documentation</a>
+
+let render ?description ?styles ?(canonical = None) ~title ~header_html ~sidebar_html inner =
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <% (match description with | Some description -> %>
-    <meta name="description" content="<%s description %>" />
+    <meta name="description" content="<%s description %>">
     <% | None -> ()); %>
-    <meta name="twitter:title" content="<%s title %>" />
+    <meta name="twitter:title" content="<%s title %>">
     <% (match description with | Some description -> %>
-    <meta name="twitter:description" content="<%s description %>" />
+    <meta name="twitter:description" content="<%s description %>">
     <% | None -> ()); %>
-    <meta property="og:site_name" content="OCaml" />
-    <meta property="og:type" content="object" />
-    <meta property="og:title" content="<%s title %>" />
+    <meta property="og:site_name" content="OCaml">
+    <meta property="og:type" content="object">
+    <meta property="og:title" content="<%s title %>">
     <% (match description with | Some description -> %>
-    <meta property="og:description" content="<%s description %>" />
+    <meta property="og:description" content="<%s description %>">
     <% | None -> ()); %>
-    <meta name="theme-color" content="#fff" />
-    <meta name="color-scheme" content="white" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="manifest" href="/manifest.json" />
+    <% (match canonical with | Some canonical -> %>
+    <link rel="canonical" href="https://ocaml.org<%s canonical %>">
+    <% | None -> ()); %>
+    <meta name="theme-color" content="#fff">
+    <meta name="color-scheme" content="white">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
     <% (match styles with | Some styles -> styles |> List.iter (fun style -> %>
-    <link rel="stylesheet" href="<%s style %>" />
+    <link rel="stylesheet" href="<%s style %>">
     <% ) | None -> %>
-    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/main.css">
     <% ); %>
-    <link rel="stylesheet" href="/vendors/font-files/inter.css" />
+    <link rel="stylesheet" href="/vendors/font-files/inter.css">
     <script defer src="/vendors/alpine.min.js"></script>
     <title><%s title %></title>
   </head>
 
   <body class="light">
-    <%s! Docs_header.render ~logo_href ~inner_html:header_html %>
+    <%s! Docs_header.render ~inner_html:header_html %>
 
     <main>
       <div class="bg-white" x-data="{ open: false, sidebar: window.innerWidth > 1024 && true, showOnMobile: false}" @resize.window="sidebar = window.innerWidth > 1024">
