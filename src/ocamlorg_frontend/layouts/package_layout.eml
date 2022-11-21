@@ -4,10 +4,10 @@ type tab =
   
 
 let packages_link =
-  <a class="text-lg text-orange-600 font-bold" href="<%s Url.packages %>">Packages</a>
+  <a class="block text-lg text-orange-600 font-bold" href="<%s Url.packages %>">Packages</a>
 
 let version_select ~tab ~(package : Package_intf.package) =
-  <select id="version" name="version" onchange="location = this.value;" class="w-full lg:w-auto appearance-none text-body-600 border rounded-md py-1 pl-3 border-gray-200 pr-14 h-full">
+  <select id="version" name="version" onchange="location = this.value;" class="sm:block w-full lg:w-auto appearance-none text-body-600 border rounded-md py-1 pl-3 border-gray-200 pr-14 h-full">
     <% package.versions |> List.iter begin fun v -> %>
     <option value="<%s (match tab with
       | Documentation -> Url.package_doc package.name v ~page:"index.html"
@@ -18,10 +18,10 @@ let version_select ~tab ~(package : Package_intf.package) =
   </select>
 
 let package_overview_link ~active ~(package : Package_intf.package) =
-  <a class="font-semibold text-gray-900 <%s if active then "underline" else ""%>" href="<%s Url.package_with_version package.name package.version %>"><%s package.name %></a>
+  <a class="block font-semibold text-gray-900 <%s if active then "underline" else ""%>" href="<%s Url.package_with_version package.name package.version %>"><%s package.name %></a>
 
 let package_docs_link ~active ~(package: Package_intf.package) =
-  <a class="<%s if active then "text-gray-900 underline" else ""%>" href="<%s Url.package_doc package.name package.version ~page:"index.html" %>">Documentation</a>
+  <a class="block <%s if active then "text-gray-900 underline" else ""%>" href="<%s Url.package_doc package.name package.version ~page:"index.html" %>">Documentation</a>
 
 
 let render
@@ -91,7 +91,7 @@ in
   <body class="light">
     <%s! Docs_header.render ~wide ~inner_html:((packages_link) ^ (package_overview_link ~package ~active:(tab == Overview)) ^ (version_select ~tab ~package) ^ (package_docs_link ~package ~active:(tab == Documentation))) () %>
 
-    <div class="pt-12">
+    <div class="lg:pt-12">
       <%s! inner_html %>
     </div>
 
