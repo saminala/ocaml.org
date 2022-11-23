@@ -27,6 +27,7 @@ let package_docs_link ~active ~(package: Package_intf.package) =
 let render
 ?styles
 ?(wide=false)
+?(extra_header_html="")
 ~title
 ~description
 ~(tab: tab)
@@ -89,7 +90,7 @@ in
   </head>
 
   <body class="light">
-    <%s! Docs_header.render ~wide ~inner_html:((packages_link) ^ (package_overview_link ~package ~active:(tab == Overview)) ^ (version_select ~tab ~package) ^ (package_docs_link ~package ~active:(tab == Documentation))) () %>
+    <%s! Docs_header.render ~wide ~inner_html:((packages_link) ^ (package_overview_link ~package ~active:(tab == Overview)) ^ (version_select ~tab ~package) ^ extra_header_html) () %>
 
     <div class="lg:pt-12">
       <%s! inner_html %>

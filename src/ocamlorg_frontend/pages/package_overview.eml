@@ -27,7 +27,7 @@ Package_layout.render
 <main>
 <div class="bg-white">
 <div class="container-fluid">
-<div class="flex lg:space-x-4 xl:space-x-12 flex-col xl:flex-row justify-between">
+<div class="flex lg:space-x-4 xl:space-x-12 flex-col lg:flex-row justify-between">
     <div class="flex-1 w-full xl:w-1/2 max-w-full pb-8">
         <div class="flex flex-col mt-8 mb-6">
           <h1 class="font-bold mb-3">
@@ -44,6 +44,7 @@ Package_layout.render
               <a :class="{ '<%s tab_class %>': tab !== '', '<%s current_tab_class %>': tab == '' }" @click.prevent="tab = ''; window.location.hash = ''" href="#"><%s! readme_title %></a>
               <a :class="{ '<%s tab_class %>': tab !== 'dependencies', '<%s current_tab_class %>': tab == 'dependencies' }" @click.prevent="tab = 'dependencies'; window.location.hash = 'dependencies'" href="#"><%s Int.to_string @@ List.length dependencies %> Dependencies</a>
               <a :class="{ '<%s tab_class %>': tab !== 'dependents', '<%s current_tab_class %>': tab == 'dependents' }" @click.prevent="tab = 'dependents'; window.location.hash = 'dependents'" href="#"><%s Int.to_string @@ List.length rev_dependencies %> Dependents</a>
+              <a :class="{ '<%s tab_class %> lg:hidden': tab !== 'install', '<%s current_tab_class %>': tab == 'install' }" @click.prevent="tab = 'install'; window.location.hash = 'install'" href="#">Install</a>
             </div>
         </nav>
 
@@ -84,6 +85,9 @@ Package_layout.render
                 <% ); %>
             </div>
         </div>
+        </div>
+        <div x-show="tab === 'install'" >
+            
         </div>
 
     </div>

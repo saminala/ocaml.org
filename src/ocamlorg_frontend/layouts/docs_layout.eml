@@ -9,6 +9,7 @@ inner
 =
 Package_layout.render
 ?styles
+~extra_header_html:(Package_layout.package_docs_link ~package ~active:true)
 ~wide:true
 ~description
 ~canonical
